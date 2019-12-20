@@ -11,11 +11,13 @@ This repository is my learning record to use [Azure Blob Storage][blob_java_sour
 - Azure Storage Account
   - [Block Blob][understanding_blobs]
 
-## step for study
+## learning steps
 
 1. create test project with maven
 
     use the archetype called "maven-archetype-quickstart"
+
+2. fix some project settings to create an executable jar file
 
 <!-- LINKS -->
 [blob_java_source]: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/storage/azure-storage-blob
