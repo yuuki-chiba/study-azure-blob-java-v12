@@ -39,7 +39,7 @@ public class App
 
         // Create a local file in the ./data/ directory for uploading and downloading
         String localPath = "./data/";
-        String fileName = "quickstart" + java.util.UUID.randomUUID() + ".txt";
+        String fileName = "v12test_" + java.util.UUID.randomUUID() + ".txt";
         File localFile = new File(localPath + fileName);
 
         // Write text to the file
@@ -61,6 +61,15 @@ public class App
         for (BlobItem blobItem : containerClient.listBlobs()) {
             logger.info("\t" + blobItem.getName());
         }
+
+        // Download the blob to a local file
+        // Append the string "DOWNLOAD" before the .txt extension so that you can see both files.
+        String downloadFileName = fileName.replace(".txt", ".DOWNLOAD.txt");
+        File downloadedFile = new File(localPath + downloadFileName);
+
+        logger.info("\nDownloading blob to\n\t " + localPath + downloadFileName);
+
+        blobClient.downloadToFile(localPath + downloadFileName);
 
         // EOA
     }
