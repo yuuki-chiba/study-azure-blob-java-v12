@@ -65,6 +65,9 @@ public class App
             logger.info("\t" + blobItem.getName());
         }
 
+        // Append to the blob
+        appendFile(blobClient, localFile.getAbsolutePath());
+
         // Download the blob to a local file
         // Append the string "DOWNLOAD" before the .txt extension so that you can see both files.
         String downloadFileName = fileName.replace(".txt", ".DOWNLOAD.txt");
@@ -86,6 +89,13 @@ public class App
         // get client for appendable
         AppendBlobClient client = blobClient.getAppendBlobClient();
         client.create();
+
+        appendFile(client, absolutePath);
+    }
+
+    private static void appendFile(BlobClient blobClient, String absolutePath) {
+        // get client for appendable
+        AppendBlobClient client = blobClient.getAppendBlobClient();
 
         appendFile(client, absolutePath);
     }
