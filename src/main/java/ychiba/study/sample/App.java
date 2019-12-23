@@ -5,6 +5,8 @@ package ychiba.study.sample;
  */
 import com.azure.storage.blob.*;
 import com.azure.storage.blob.models.*;
+import com.azure.storage.blob.specialized.*;
+
 import java.io.*;
 
 import java.util.ResourceBundle;
@@ -53,7 +55,8 @@ public class App
         logger.info("\nUploading to Blob storage as blob:\n\t" + blobClient.getBlobUrl());
 
         // Upload the blob
-        uploadAsBlock(blobClient, localFile.getAbsolutePath());
+        // uploadAsBlock(blobClient, localFile.getAbsolutePath());
+        uploadAsAppend(blobClient, localFile.getAbsolutePath());
 
         logger.info("\nListing blobs...");
 
@@ -77,5 +80,25 @@ public class App
     private static void uploadAsBlock(BlobClient blobClient, String absolutePath) {
         // Upload the blob
         blobClient.uploadFromFile(absolutePath);
+    }
+
+    private static void uploadAsAppend(BlobClient blobClient, String absolutePath) {
+        // get client for appendable
+        AppendBlobClient client = blobClient.getAppendBlobClient();
+        client.create();
+
+        appendFile(client, absolutePath);
+    }
+
+    private static void appendFile(AppendBlobClient client, String absolutePath) {
+        try (final BlobOutputStream oStream = client.getBlobOutputStream();
+             final BufferedInputStream biStream = new BufferedInputStream(new FileInputStream(absolutePath))) {
+            int c;
+            while ((c = biStream.read()) != -1) {
+                oStream.write(c);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
