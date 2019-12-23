@@ -77,6 +77,22 @@ public class App
 
         blobClient.downloadToFile(localPath + downloadFileName);
 
+        // Clean up
+        logger.info("\nPress the Enter key to begin clean up");
+        System.console().readLine();
+
+        logger.info("Deleting blob...");
+        blobClient.delete();
+
+        // logger.info("Deleting blob container...");
+        // containerClient.delete();
+
+        logger.info("Deleting the local source and downloaded files...");
+        localFile.delete();
+        downloadedFile.delete();
+
+        logger.info("Done");
+
         // EOA
     }
 
