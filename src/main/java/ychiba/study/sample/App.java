@@ -53,7 +53,7 @@ public class App
         logger.info("\nUploading to Blob storage as blob:\n\t" + blobClient.getBlobUrl());
 
         // Upload the blob
-        blobClient.uploadFromFile(localFile.getAbsolutePath());
+        uploadAsBlock(blobClient, localFile.getAbsolutePath());
 
         logger.info("\nListing blobs...");
 
@@ -72,5 +72,10 @@ public class App
         blobClient.downloadToFile(localPath + downloadFileName);
 
         // EOA
+    }
+
+    private static void uploadAsBlock(BlobClient blobClient, String absolutePath) {
+        // Upload the blob
+        blobClient.uploadFromFile(absolutePath);
     }
 }
